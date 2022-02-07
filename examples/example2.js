@@ -1,20 +1,20 @@
-import { whisper } from '@oliveai/ldk';
-import { Color } from '@oliveai/ldk/dist/whisper';
+import { whisper } from "@oliveai/ldk";
+import { Color } from "@oliveai/ldk/dist/whisper";
 
 // Scoped so the whole file can read from this array
-const options = ['Padme', 'Yoda', 'R2D2', 'Leia'];
+const options = ["Padme", "Yoda", "R2D2", "Leia"];
 
 // Arrow function more recent update, more commonly used these days
 const createComponents = () => {
   const text = {
     type: whisper.WhisperComponentType.Message,
     style: Color.Black,
-    body: 'Iconic Moments',
+    body: "Iconic Moments",
   };
 
   const selectCharacter = {
     type: whisper.WhisperComponentType.Select,
-    label: 'Click for more details',
+    label: "Click for more details",
     options,
     onSelect: (_error, val) => {
       // variable scoped to only this function
@@ -51,9 +51,9 @@ const pictureChoice = (character) => {
   return pictureAndVideo[character];
 };
 
-export default function () {
+export default function gallery() {
   return whisper.create({
-    label: 'Gallery',
+    label: "Gallery",
     components: createComponents(),
     onClose: () => {},
   });

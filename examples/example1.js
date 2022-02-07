@@ -1,20 +1,20 @@
-import { whisper } from '@oliveai/ldk';
-import { Color } from '@oliveai/ldk/dist/whisper';
+import { whisper } from "@oliveai/ldk";
+import { Color } from "@oliveai/ldk/dist/whisper";
 
 // One style to write functions
 function createComponents() {
   const text = {
     type: whisper.WhisperComponentType.Message,
     style: Color.Accent,
-    body: 'Hello World!',
+    body: "Hello World!",
   };
 
   return text;
 }
 
-export default function () {
+export default function helloWorld() {
   return whisper.create({
-    label: 'Unleash The Force',
+    label: "Unleash The Force",
     components: [createComponents()],
     onClose: () => {},
   });
