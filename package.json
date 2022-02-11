@@ -2,9 +2,9 @@
   "name": "loop-wars",
   "version": "0.0.1",
   "description": "",
-  "main": ".examples/index.js",
+  "main": ".src/index.jsx",
   "scripts": {
-    "build": "webpack --entry ./examples/index.js --config ./node_modules/@oliveai/ldk/dist/webpack/config.js",
+    "build": "webpack --entry ./src/index.jsx --config ./node_modules/@oliveai/ldk/dist/webpack/config.js",
     "test": "jest --maxWorkers=1",
     "test:coverage": "npm run test -- --collect-coverage",
     "lint": "eslint ./ --ignore-path .gitignore",
@@ -13,56 +13,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-jest": "^27.0.6",
     "eslint": "^8.8.0",
-    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^27.2.4",
     "prettier": "^2.3.2"
   },
   "dependencies": {
-    "@babel/core": "^7.13.10",
-    "@babel/plugin-transform-async-to-generator": "^7.13.0",
-    "@babel/plugin-transform-destructuring": "^7.13.0",
-    "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.13.12",
-    "@babel/runtime": "^7.13.10",
-    "@babel/runtime-corejs2": "^7.13.10",
-    "@oliveai/ldk": "^3.9.0",
-    "babel-loader": "^8.2.2",
-    "common-tags": "^1.8.0",
-    "core-js": "^3.12.1",
-    "terser-webpack-plugin": "^5.1.1",
-    "webpack": "^5.28.0",
-    "webpack-cli": "^4.5.0",
-    "webpack-merge": "^5.7.3"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": true
-          }
-        }
-      ]
-    ]
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/*.test.{ts,js}"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/jestGlobalSetup.js"
-    ],
-    "verbose": true,
-    "collectCoverageFrom": [
-      "<rootDir>/**/*.{ts,js}"
-    ]
+    "@oliveai/ldk": "^3.11.0",
+    "common-tags": "^1.8.0"
   },
   "ldk": {
     "permissions": {
@@ -77,8 +41,7 @@
             "value": "dog.ceo"
           }
         ]
-      },
-      "user": {}
+      }
     }
   }
 }
