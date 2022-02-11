@@ -1,5 +1,9 @@
 import { React } from '@oliveai/ldk';
-import { Direction, JustifyContent } from '@oliveai/ldk/dist/whisper';
+import {
+  Direction,
+  JustifyContent,
+  TextAlign,
+} from '@oliveai/ldk/dist/whisper';
 
 import SwapiClient from '../network/SwapiClient';
 
@@ -15,6 +19,7 @@ export default function LoopWarsWhisper() {
   const [guess, setGuess] = React.useState('');
   const [guessCount, setGuessCount] = React.useState(0);
   const [correct, setCorrect] = React.useState(false);
+  const [header, setHeader] = React.useState('');
 
   React.useEffect(async () => {
     setPeople(await SwapiClient.getPeople());
@@ -31,11 +36,13 @@ export default function LoopWarsWhisper() {
   };
 
   const makeGuess = () => {
-    if (!correct && guessCount < MAX_GUESSES) {
+    if (guess && !correct && guessCount < MAX_GUESSES) {
       setGuessCount(guessCount + 1);
-      setCorrect(
-        selectedPerson.name.toLowerCase().includes(guess.toLowerCase())
-      );
+      setGuess('');
+      const wasCorrect =
+        selectedPerson.name.toLowerCase() === guess.toLowerCase();
+      setHeader(wasCorrect ? randomChoice(yup) : randomChoice(nope));
+      setCorrect(wasCorrect);
     }
   };
 
@@ -57,21 +64,26 @@ export default function LoopWarsWhisper() {
           />
           {guessCount > 0 && (
             <oh-message
-              header={correct ? randomChoice(nope) : randomChoice(yup)}
+              header={header}
+              textAlign={TextAlign.Center}
               body={
-                (correct || guessCount >= MAX_GUESSES) && selectedPerson.name
+                correct || guessCount >= MAX_GUESSES
+                  ? `The answer was ${selectedPerson.name}`
+                  : ''
               }
             />
           )}
-          <oh-box
-            direction={Direction.Horizontal}
-            justifyContent={JustifyContent.Center}
-          >
-            {new Array(MAX_GUESSES - guessCount).fill(0).map(() => (
-              <oh-icon name="language" />
-            ))}
-          </oh-box>
-          <oh-text-input value={guess} onChange={setGuess} />
+          {guessCount < MAX_GUESSES && (
+            <oh-box
+              direction={Direction.Horizontal}
+              justifyContent={JustifyContent.Center}
+            >
+              {new Array(MAX_GUESSES - guessCount).fill(0).map(() => (
+                <oh-icon name="language" />
+              ))}
+            </oh-box>
+          )}
+          <oh-text-input value={guess} onChange={(_, val) => setGuess(val)} />
           <oh-box
             direction={Direction.Horizontal}
             justifyContent={JustifyContent.SpaceBetween}
