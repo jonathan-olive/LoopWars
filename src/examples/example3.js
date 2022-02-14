@@ -1,5 +1,5 @@
-import { whisper, network } from "@oliveai/ldk";
-import { Color } from "@oliveai/ldk/dist/whisper";
+import { whisper, network } from '@oliveai/ldk';
+import { Color } from '@oliveai/ldk/dist/whisper';
 
 const URL = `https://dog.ceo/api/breed`;
 
@@ -7,23 +7,25 @@ const getDog = async (breed, subBreed, imageCount) => {
   const updatedURL = subBreed
     ? `${URL}/${breed}/${subBreed}/images/random/${imageCount}`
     : `${URL}/${breed}/images/random/${imageCount}`;
+  let parsedBody;
   try {
     const request = {
       url: updatedURL,
-      method: "GET",
+      method: 'GET',
     };
     const response = await network.httpRequest(request);
     const decodedBody = await network.decode(response.body);
-    const parsedBody = JSON.parse(decodedBody);
-    return parsedBody;
+    parsedBody = JSON.parse(decodedBody);
   } catch (err) {
     console.error(err);
   }
+
+  return parsedBody;
 };
 
-let breed = "";
-let breedValidation = "";
-let subBreed = "";
+let breed = '';
+let breedValidation = '';
+let subBreed = '';
 let imageCount = 1;
 let dogImage = {};
 
@@ -31,7 +33,7 @@ const inputComponents = () => {
   const breedInput = {
     type: whisper.WhisperComponentType.TextInput,
     validationError: breedValidation,
-    label: "Breed Name",
+    label: 'Breed Name',
     onChange: (_error, val) => {
       breed = val.toLowerCase();
     },
@@ -39,7 +41,7 @@ const inputComponents = () => {
 
   const subBreedInput = {
     type: whisper.WhisperComponentType.TextInput,
-    label: "SubBreed Name (optional)",
+    label: 'SubBreed Name (optional)',
     onChange: (_error, val) => {
       subBreed = val.toLowerCase();
     },
@@ -51,8 +53,8 @@ const inputComponents = () => {
     max: 4,
     min: 1,
     step: 1,
-    tooltip: "How many images? (optional)",
-    label: "How many images? (optional)",
+    tooltip: 'How many images? (optional)',
+    label: 'How many images? (optional)',
     onChange: (_error, val) => {
       imageCount = val;
     },
@@ -75,13 +77,13 @@ const createComponents = () => {
 
   const submit = {
     type: whisper.WhisperComponentType.Button,
-    label: "Go Fetch",
+    label: 'Go Fetch',
     onClick: async (_, thisWhisper) => {
       dogImage = await getDog(breed, subBreed, imageCount);
-      if (!breed) breedValidation = "This field is required";
-      else breedValidation = "";
+      if (!breed) breedValidation = 'This field is required';
+      else breedValidation = '';
 
-      if (dogImage.status === "success")
+      if (dogImage.status === 'success')
         thisWhisper.update({ components: createComponents() });
       else
         thisWhisper.update({
@@ -102,7 +104,7 @@ const createComponents = () => {
 
 export default function translatorAPI() {
   return whisper.create({
-    label: "Good Doggo",
+    label: 'Good Doggo',
     components: createComponents(),
     onClose: () => {},
   });

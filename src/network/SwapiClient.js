@@ -3,6 +3,7 @@ import { network } from '@oliveai/ldk';
 
 const fetch = async (resource) => {
   const results = [];
+  // eslint-disable-next-line no-constant-condition
   for (let page = 1; true; page += 1) {
     const body = JSON.parse(
       await network.decode(
