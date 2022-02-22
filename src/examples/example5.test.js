@@ -1,5 +1,6 @@
+import { whisper } from '@oliveai/ldk';
 import SwapiClient from '../network/SwapiClient';
-import LoopWarsGame from './example5';
+import LoopWarsGame, { createComponents } from './example5';
 
 jest.mock('@oliveai/ldk');
 jest.mock('../network/SwapiClient');
@@ -32,18 +33,68 @@ const MOCK_PERSON = {
   ],
   created: '2014-12-09T13:50:51.644000Z',
   edited: '2014-12-20T21:17:56.891000Z',
-  url: 'https://swapi.dev/api/people/1/',
+  url: 'https://swapi.dev/api/people/1/ ',
 };
 
 describe('Creating Components', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    SwapiClient.getPeople = jest.fn().mockResolvedValueOnce([MOCK_PERSON]);
   });
 
   it('returns the correct components when createComponents is called', async () => {
-    SwapiClient.getPeople = jest.fn().mockResolvedValueOnce([MOCK_PERSON]);
+    let props = {
+      people: SwapiClient.getPeople,
+      selectedPerson: MOCK_PERSON,
+      guessCount: 0,
+      correct: false,
+      header: '',
+    };
+    const actual = await createComponents(props);
 
-    await LoopWarsGame({});
+    const expected = [
+      expect.objectContaining({
+        type: whisper.WhisperComponentType.Message,
+      }),
+      expect.objectContaining({
+        type: whisper.WhisperComponentType.Markdown,
+      }),
+      expect.objectContaining({
+        type: whisper.WhisperComponentType.Message,
+      }),
+      expect.objectContaining({
+        type: whisper.WhisperComponentType.Box,
+      }),
+      expect.objectContaining({
+        type: whisper.WhisperComponentType.Message,
+      }),
+      expect.objectContaining({
+        type: whisper.WhisperComponentType.TextInput,
+      }),
+      expect.objectContaining({
+        type: whisper.WhisperComponentType.Box,
+      }),
+    ];
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('shows the answer after max guesses (3) reached', async () => {
+    let props = {
+      people: SwapiClient.getPeople,
+      selectedPerson: MOCK_PERSON,
+      guessCount: 3,
+      correct: false,
+      header: '',
+    };
+    const person = await createComponents(props);
+    const actual = person[2].body;
+    const expected = `The answer was ${props.selectedPerson.name}`;
+    expect(actual).toEqual(expected);
+  });
+
+  it('makes an API call to SWAPI successfully', async () => {
+    await LoopWarsGame();
 
     expect(SwapiClient.getPeople).toBeCalled();
   });

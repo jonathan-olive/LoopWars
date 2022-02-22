@@ -36,10 +36,11 @@ const getId = (personUrl) => {
  *
  * What can we add to this function? Think about errors?
  */
-const createComponents = async (props) => {
+export const createComponents = async (props) => {
   // We don't want to fetch the data every time, this is a logical OR (||) operator that uses the existing
   // data from SWAPI if it already exists. Otherwise it will fetch the data from the API
   const people = props.people || (await SwapiClient.getPeople());
+  console.log('::PE', JSON.stringify(people));
   const selectedPerson = props.selectedPerson || randomChoice(people);
   let guessCount = props.guessCount || 0;
   let guess = '';
@@ -167,6 +168,5 @@ export default async function LoopWarsGame() {
   return whisper.create({
     label: 'Loop Wars The Game',
     components: await createComponents({}),
-    onClose: () => {},
   });
 }

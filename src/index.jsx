@@ -13,10 +13,10 @@ import LoopWarsGame from './examples/example5';
  * Is called by the loopOpenHandler Below, it calls the functions for each loop in order
  */
 const start = async () => {
-  // helloWorld();
-  // gallery();
-  // DoggoAPI();
-  // randomPersonAPI();
+  helloWorld();
+  gallery();
+  DoggoAPI();
+  randomPersonAPI();
   LoopWarsGame();
   // ReactWhisper.renderNewWhisper(<LoopWarsWhisper />);
 };
