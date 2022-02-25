@@ -45,14 +45,6 @@ export const createComponents = async (props) => {
   let guess = '';
   let correct = false;
   let header = props.header || '';
-  let score = props.score || 0;
-
-  const streakScore = {
-    type: whisper.WhisperComponentType.Message,
-    style: whisper.Color.Grey,
-    textAlign: whisper.TextAlign.Right,
-    body: `Streak: ${score}`,
-  };
 
   const picture = {
     type: whisper.WhisperComponentType.Markdown,
@@ -83,19 +75,6 @@ export const createComponents = async (props) => {
     justifyContent: whisper.JustifyContent.Center,
   };
 
-  const hintWord = selectedPerson.name
-    .split('')
-    .map((letter, index) => {
-      if (letter === ' ') return ' ';
-      if (index % 3 === 0) return letter;
-      return '-';
-    })
-    .join('');
-  const hint = {
-    type: whisper.WhisperComponentType.Message,
-    body: `Hint: ${hintWord}`,
-  };
-
   const textInput = {
     type: whisper.WhisperComponentType.TextInput,
     label: '',
@@ -118,7 +97,6 @@ export const createComponents = async (props) => {
         const wasCorrect =
           selectedPerson.name.toLowerCase() === guess.toLowerCase();
         header = wasCorrect ? randomChoice(yup) : randomChoice(nope);
-        score = wasCorrect ? score + 1 : score;
         correct = wasCorrect;
       }
       guess = '';
@@ -129,7 +107,6 @@ export const createComponents = async (props) => {
           guessCount,
           correct,
           header,
-          score,
         }),
       });
     },
@@ -140,7 +117,7 @@ export const createComponents = async (props) => {
     label: 'Next Character',
     onClick: async (_, thisWhisper) => {
       thisWhisper.update({
-        components: await createComponents({ people, score }),
+        components: await createComponents({ people }),
       });
     },
   };
@@ -152,15 +129,7 @@ export const createComponents = async (props) => {
     justifyContent: whisper.JustifyContent.SpaceBetween,
   };
 
-  return [
-    streakScore,
-    picture,
-    guessAttempt,
-    healthBarBox,
-    hint,
-    textInput,
-    buttonBox,
-  ];
+  return [picture, guessAttempt, healthBarBox, textInput, buttonBox];
 };
 
 export default async function LoopWarsGame() {

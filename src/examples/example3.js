@@ -114,36 +114,17 @@ const createComponents = () => {
     }
   }
 
-  // We put the logic of the different scenarios that can arise when button is clicked based on the values in the onClick handler
-  const submit = {
-    type: whisper.WhisperComponentType.Button,
-    label: 'Go Fetch',
-    onClick: async (_, thisWhisper) => {
-      dogImage = await getDog(breed, subBreed, imageCount);
-      // Is there another way to rewrite this?
-      if (!breed) breedValidation = 'This field is required';
-      else breedValidation = '';
-
-      // You can leave off brackets in if statements when only one statement is being performed
-      if (dogImage.status === 'success')
-        thisWhisper.update({ components: createComponents() });
-      else
-        thisWhisper.update({
-          components: [
-            ...createComponents(),
-            {
-              type: whisper.WhisperComponentType.Message,
-              style: Color.Accent,
-              body: "Unable to find breed, please try again. (E.g. Breed: 'Boxer' or Breed: 'Australian', SubBreed 'Shepherd')",
-            },
-          ],
-        });
-    },
-  };
+  /***
+   *
+   *
+   * Add a submit component here!
+   *
+   *
+   */
 
   // The ... is called a spread, in our case inputs and images are arrays with items inside. The spread will allow us
   // to extract those elements and put them into a new array list [] that is being returned
-  return [...inputs, submit, ...images];
+  return [...inputs, ...images];
 };
 
 export default function translatorAPI() {

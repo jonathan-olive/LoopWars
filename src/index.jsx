@@ -5,19 +5,21 @@ import { ui, React, ReactWhisper } from '@oliveai/ldk';
 import LoopWarsWhisper from './whispers/LoopWarsWhisper';
 import helloWorld from './examples/example1';
 import gallery from './examples/example2';
-import DoggoAPI from './examples/example3';
-import randomPersonAPI from './examples/example4';
-import LoopWarsGame from './examples/example5';
+import unfinishedGame from './examples/example5';
+import DoggoAPI from './final-answers/example3a';
+import randomPersonAPI from './final-answers/example4a';
+import LoopWarsGame from './final-answers/example5a';
 
 /**
  * Is called by the loopOpenHandler Below, it calls the functions for each loop in order
  */
 const start = async () => {
   helloWorld();
-  gallery();
-  DoggoAPI();
-  randomPersonAPI();
-  LoopWarsGame();
+  // gallery();
+  // DoggoAPI();
+  // randomPersonAPI();
+  unfinishedGame();
+  // LoopWarsGame();
   // ReactWhisper.renderNewWhisper(<LoopWarsWhisper />);
 };
 

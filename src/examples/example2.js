@@ -1,17 +1,17 @@
 import { whisper } from '@oliveai/ldk';
 
 // Scoped so the whole file can read from this array
-const options = ['Padme', 'Yoda', 'R2D2', 'Leia', `${new Error()}`];
+const options = ['Padme', 'Yoda', 'R2D2', 'Leia'];
 
 /* You can add parameters to functions when declaring them, so that you call them elsewhere with
  * arguments.
  * This is a type of function called, a function arrow expression. And is a more recent update that's commonly used these days
  *
- * This function Holds the image/dvideo url links to be used by the Select Component
+ * This function Holds the image/video url links to be used by the Select Component
  * Is there another way to rewrite this functionality in the code?
  */
 const pictureChoice = (character) => {
-  // The following string is part of the Mardown syntax: https://www.markdownguide.org/basic-syntax/
+  // The following string is part of the Markdown syntax: https://www.markdownguide.org/basic-syntax/
   // The above link shows examples for what the syntax translates to when rendered
   const pictureAndVideo = {
     Leia: `[![Leia](https://grazia.wwmindia.com/content/2020/may/hairleiabunsthumbnail1588581574.jpg)](https://www.youtube.com/watch?v=Q9taSDr4MwA)`,

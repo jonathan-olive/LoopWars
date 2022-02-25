@@ -42,7 +42,7 @@ describe('Creating Components', () => {
     SwapiClient.getPeople = jest.fn().mockResolvedValueOnce([MOCK_PERSON]);
   });
 
-  it('returns the correct components when createComponents is called', async () => {
+  xit('returns the correct components when createComponents is called', async () => {
     let props = {
       people: SwapiClient.getPeople,
       selectedPerson: MOCK_PERSON,
@@ -79,7 +79,7 @@ describe('Creating Components', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('shows the answer after max guesses (3) reached', async () => {
+  xit('shows the answer after max guesses (3) reached', async () => {
     let props = {
       people: SwapiClient.getPeople,
       selectedPerson: MOCK_PERSON,
